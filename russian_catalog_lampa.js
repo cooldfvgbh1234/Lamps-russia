@@ -68,16 +68,6 @@ function catalog(type, genre) {
     Lampa.Activity.push(activity);
 }
 
-
-        Lampa.Activity.push({
-            url: path + '?' + query,
-            title: title,
-            component: 'category',
-            source: 'tmdb',
-            page: 1
-        });
-    }
-
     function openRussia() {
         select('Российское кино', [
             {title:'Российские фильмы',id:'movie'},
