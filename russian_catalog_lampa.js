@@ -50,19 +50,16 @@
 
     
 
+
 function catalog(type, genre) {
     var tv = type === 'tv';
-    var today = new Date().toISOString().slice(0, 10);
 
     var activity = {
         url: tv ? 'tv' : 'movie',
         title: tv ? 'Российские сериалы' : 'Российские фильмы',
         component: 'category_full',
         source: 'tmdb',
-        page: 1,
-        sort_by: tv ? 'first_air_date.desc' : 'primary_release_date.desc',
-        'primary_release_date.lte': today,
-        'first_air_date.lte': today
+        page: 1
     };
 
     if (genre && genre.id) {
@@ -72,6 +69,7 @@ function catalog(type, genre) {
 
     Lampa.Activity.push(activity);
 }
+
 
 
 
