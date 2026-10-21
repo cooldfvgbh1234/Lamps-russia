@@ -39,7 +39,7 @@
         Lampa.Select.show({
             title: title,
             items: items.map(function (item) {
-                return {title:item.title,id:item.id};
+                return {title: item.title, id: item.id};
             }),
             onSelect: callback,
             onBack: function () {
@@ -48,44 +48,28 @@
         });
     }
 
-    
-
-
-function catalog(type, genre) {
-    var tv = type === 'tv';
-
-    var activity = {
-        url: tv ? 'tv' : 'movie',
-        title: tv ? 'Российские сериалы' : 'Российские фильмы',
-        component: 'category_full',
-        source: 'tmdb',
-        page: 1
-    };
-
-    if (genre && genre.id) {
-        activity.genres = String(genre.id);
-        activity.title += ' — ' + genre.title.toLowerCase();
-    }
-
-    Lampa.Activity.push(activity);
-}
-
-
-
-
-        Lampa.Activity.push({
-            url: path + '?' + query,
-            title: title,
+    function catalog(type, genre) {
+        var tv = type === 'tv';
+        var activity = {
+            url: tv ? 'tv' : 'movie',
+            title: tv ? 'Российские сериалы' : 'Российские фильмы',
             component: 'category_full',
             source: 'tmdb',
             page: 1
-        });
+        };
+
+        if (genre && genre.id) {
+            activity.genres = String(genre.id);
+            activity.title += ' — ' + genre.title.toLowerCase();
+        }
+
+        Lampa.Activity.push(activity);
     }
 
     function openRussia() {
         select('Российское кино', [
-            {title:'Российские фильмы',id:'movie'},
-            {title:'Российские сериалы',id:'tv'}
+            {title: 'Российские фильмы', id: 'movie'},
+            {title: 'Российские сериалы', id: 'tv'}
         ], function (item) {
             var tv = item.id === 'tv';
             select(
