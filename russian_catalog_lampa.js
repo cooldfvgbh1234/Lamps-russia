@@ -64,7 +64,7 @@
         Lampa.Activity.push({
             url: path + '?' + query,
             title: title,
-            component: 'category',
+            component: 'category_full',
             source: 'tmdb',
             page: 1
         });
