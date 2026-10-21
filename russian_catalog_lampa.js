@@ -51,21 +51,26 @@
     
 function catalog(type, genre) {
     var tv = type === 'tv';
+    var today = new Date().toISOString().slice(0, 10);
 
-    var activity = {
-        url: tv ? 'tv' : 'movie',
-        title: tv ? 'Российские сериалы' : 'Российские фильмы',
+    var url = 'discover/' + (tv ? 'tv' : 'movie') +
+        '?with_origin_country=RU' +
+        '&with_original_language=ru' +
+        '&sort_by=' + (tv ? 'first_air_date.desc' : 'primary_release_date.desc') +
+        '&' + (tv ? 'first_air_date.lte=' : 'primary_release_date.lte=') + today;
+
+    if (genre && genre.id) {
+        url += '&with_genres=' + genre.id;
+    }
+
+    Lampa.Activity.push({
+        url: url,
+        title: (tv ? 'Российские сериалы' : 'Российские фильмы') +
+            (genre && genre.id ? ' — ' + genre.title.toLowerCase() : ''),
         component: 'category_full',
         source: 'tmdb',
         page: 1
-    };
-
-    if (genre && genre.id) {
-        activity.genres = String(genre.id);
-        activity.title += ' — ' + genre.title.toLowerCase();
-    }
-
-    Lampa.Activity.push(activity);
+    });
 }
 
     function openRussia() {
