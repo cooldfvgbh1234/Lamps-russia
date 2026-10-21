@@ -48,18 +48,26 @@
         });
     }
 
-    function catalog(type, genre) {
-        var tv = type === 'tv';
-        var path = tv ? 'discover/tv' : 'discover/movie';
-        var title = tv ? 'Российские сериалы' : 'Российские фильмы';
-        var query = 'with_original_language=ru&sort_by=' +
-            (tv ? 'first_air_date.desc' : 'primary_release_date.desc') +
-            '&include_adult=false';
+    
+function catalog(type, genre) {
+    var tv = type === 'tv';
 
-        if (genre && genre.id) {
-            query += '&with_genres=' + genre.id;
-            title += ' — ' + genre.title.toLowerCase();
-        }
+    var activity = {
+        url: tv ? 'tv' : 'movie',
+        title: tv ? 'Российские сериалы' : 'Российские фильмы',
+        component: 'category_full',
+        source: 'tmdb',
+        page: 1
+    };
+
+    if (genre && genre.id) {
+        activity.genres = String(genre.id);
+        activity.title += ' — ' + genre.title.toLowerCase();
+    }
+
+    Lampa.Activity.push(activity);
+}
+
 
         Lampa.Activity.push({
             url: path + '?' + query,
