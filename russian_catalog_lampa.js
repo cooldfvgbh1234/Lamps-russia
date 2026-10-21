@@ -49,22 +49,29 @@
     }
 
     function catalog(type, genre) {
-        var tv = type === 'tv';
-        var activity = {
-            url: tv ? 'tv' : 'movie',
-            title: tv ? 'Российские сериалы' : 'Российские фильмы',
-            component: 'category_full',
-            source: 'tmdb',
-            page: 1
-        };
+    var tv = type === 'tv';
 
-        if (genre && genre.id) {
-            activity.genres = String(genre.id);
-            activity.title += ' — ' + genre.title.toLowerCase();
-        }
+    var activity = {
+        url: tv ? 'tv' : 'movie',
+        title: tv ? 'Российские сериалы' : 'Российские фильмы',
+        component: 'category_full',
+        source: 'tmdb',
+        page: 1
+    };
 
-        Lampa.Activity.push(activity);
+    if (tv) {
+        activity.with_origin_country = 'RU';
+    } else {
+        activity.primary_release_country = 'RU';
     }
+
+    if (genre && genre.id) {
+        activity.genres = String(genre.id);
+        activity.title += ' — ' + genre.title.toLowerCase();
+    }
+
+    Lampa.Activity.push(activity);
+}
 
     function openRussia() {
         select('Российское кино', [
